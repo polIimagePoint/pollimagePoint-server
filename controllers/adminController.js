@@ -28,29 +28,38 @@ class AdminController {
         name : req.body.name
       })
       .then(user => {
+        console.log(user);
         const result = bcryptjs.compareSync(req.body.password, user.password);
+        // res.status(200).json({
+        //   msg : result
+        // })
         if(result) {
-          helpers
-            .generateToken(user.name, user.id)
-            .then(token => {
-              res.status(200).json({
-                msg : 'login success',
-                token : token
-              })
-            })
-            .catch(err => {
-              res.status(500).json(err)
-            })
-          
-        } else {
-          res.status(400).json({
-            msg : 'Invalid username / password'
+          // helpers
+          //   .generateToken(user.name, user.id)
+          //   .then(token => {
+          //     res.status(200).json({
+          //       msg : 'login success',
+          //       token : token
+          //     })
+          //   })
+          //   .catch(err => {
+            
+          //     res.status(500).json({message:'masuk sini'})
+          //   })
+          const token = jwt.sign(user.name, 'rahasia');
+          res.status(200).json({
+            token : token
           })
-        }
+          }
+        // } else {
+        //   res.status(400).json({
+        //     msg : 'Invalid username / password'
+        //   })
+        // }
       })
       .catch(err => {
         console.log(err)
-        res.status(500).json(err)
+        res.status(500).json(err.message)
       })
   }
 }
