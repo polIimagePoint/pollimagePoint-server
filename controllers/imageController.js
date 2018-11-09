@@ -7,8 +7,8 @@ class imageController {
         return new Promise ((resolve, reject) => {
             Image
             .create({
-                name : req.body.name,
-                description : req.body.description,
+                // name : req.body.name,
+                // description : req.body.description,
                 url : req.file.cloudStoragePublicUrl
             })
             .then(data => {
